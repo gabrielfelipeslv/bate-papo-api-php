@@ -1,0 +1,109 @@
+*, ::after, ::before {
+    box-sizing: border-box;
+    font-family: Calibri, sans-serif !important;
+}
+:root {
+    --tema-hypeone: #5400CE;
+    --tema-hypeone-suave: #518DCA;
+    --tema-hypeone-forte: #24007E;
+}
+
+body{
+    margin-top: 100px;
+    padding: 20px;
+}
+
+.btn-default{
+    background: #FAFAFA;
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px 20px;
+    color: #555;
+    font-weight: 800;
+    font-size: 1rem;
+    text-decoration: none;
+    display: block;
+    width: fit-content;
+    margin: auto;
+    box-shadow: 4px 4px 0px 2px rgb(55 55 55 / 30%);
+    cursor: pointer;
+    border: none;
+}
+.btn-default:hover{
+    background: var(--tema-hypeone-forte);
+    color: white;
+}
+
+h1{
+    font-size: 1.3rem;
+    text-decoration: none;
+    text-align: center;
+}
+
+body{
+    position: relative;
+}
+body:after, body:before{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+}
+body.processando{
+    overflow: hidden;
+    pointer-events: none;
+}
+body.processando:before, body.processando:after{
+    display: block;
+}
+body:before{
+    content: 'Processando... Não feche e nem atualize a página!';
+    color: white;
+    font-weight: 600;
+    background: rgba(0, 0, 0, .6);
+    z-index: 999999;
+    text-align: center;
+    padding: 60vh 30px 0;
+}
+body:after{
+    content: '';
+    border-radius: 100%;
+    border: 10px solid var(--tema-hypeone);
+    border-right-color: #FAFAFA;
+    width: 70px;
+    height: 70px;
+    text-align: center;
+    z-index: 1000000;
+    animation: borda-loading 1s infinite;
+    transition: all ease .2s;
+    margin: auto;
+}
+@keyframes borda-loading {
+    0% {
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+/*body.sombra-total{*/
+/*    position: relative;*/
+/*    overflow-y: hidden;*/
+/*}*/
+
+/*body.sombra-total:after{*/
+/*    content: "";*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    left: 0;*/
+/*    background: black;*/
+/*    opacity: 0.9;*/
+/*    transition: 0.5s all ease;*/
+/*    z-index: 100;*/
+/*}*/
+

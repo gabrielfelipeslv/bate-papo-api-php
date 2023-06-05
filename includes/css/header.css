@@ -1,0 +1,99 @@
+
+#menu-principal{
+    position: fixed;
+    z-index: 10000;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--tema-hypeone);
+    height: 80px;
+}
+
+#responsiva{
+    background-color: #F1F1F1;
+    overflow-y: auto !important;
+    font-weight: 500;
+    position: fixed;
+    top: 80px;
+    bottom: 0;
+    width: 60%;
+    height: auto;
+    display: none;
+    padding-top: 10px;
+}
+
+#responsiva a{
+    display: block;
+    padding: 10px 20px;
+    color: var(--tema-hypeone-suave);
+    text-decoration: none;
+}
+#responsiva a:hover{
+    text-decoration: underline;
+}
+
+#responsiva hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.menu{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    padding: 0 20px;
+    width: 100%;
+    height: 100%;
+}
+.menu::-webkit-scrollbar {
+    height: 5px;
+    background-color: var(--tema-site-claro);
+}
+.menu::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.5);
+    background-color: var(--tema-site-escuro);
+}
+.menu::-webkit-scrollbar-track {
+    background-color: var(--tema-site-claro);
+    margin: 15px;
+}
+.menu-partes{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.menu-partes > *{
+    margin: 0 5px !important;
+}
+.toggle-menu{
+    border: unset;
+    margin: 0;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+}
+.toggle-menu svg{
+    width: 30px;
+    fill: #EEE;
+}
+.toggle-menu:hover svg{
+    fill: #d1d9ff;
+}
+
+@media (min-width: 781px) {
+    .toggle-menu{
+        display: none !important;
+    }
+    main{
+        margin-left: 25%;
+    }
+    #corpo{
+        flex: 1;
+        max-width: 1000px;
+    }
+    #responsiva{
+        z-index: 10;
+        height: 100%;
+        width: 24%;
+        position: fixed;
+        display: block !important;
+    }
+}
