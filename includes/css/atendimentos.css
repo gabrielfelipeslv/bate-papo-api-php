@@ -14,6 +14,15 @@
     flex-wrap: wrap;
     justify-content: space-around;
     gap: 20px;
+    position: relative;
+}
+
+#container-atendimentos:empty:after{
+    content: 'Não existe nenhum atendimento.';
+    padding: 20px;
+    background: #DDD;
+    border-radius: 3px;
+    font-size: .8rem;
 }
 
 .link-atendimento{
