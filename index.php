@@ -76,7 +76,8 @@ try {
         if(isset($parametroConteudo)){
             call_user_func_array(array($c,'carregarConteudo'), [$parametroConteudo]);
         }else{
-            call_user_func_array(array($c,$metodo), [explode('/', $url)[2] ?? '']);
+            $urlExploded = explode('/', $url);
+            call_user_func_array(array($c,$metodo), array_splice($urlExploded, 2));
         }
     }
 }catch(Throwable $e){

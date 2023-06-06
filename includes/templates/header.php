@@ -28,7 +28,7 @@
     </div>
 
     <nav id="responsiva">
-        <a href="<?=SITE?>/atendimentos/criar" title="Página Inicial">
+        <a href="<?=SITE?>" title="Página Inicial">
             Página Inicial
         </a>
         <a href="<?=SITE?>/atendimentos/criar" title="Iniciar atendimento">

@@ -5,7 +5,7 @@
 <?php }else{ ?>
     <div id="container-atendimentos">
     <?php foreach ($atendimentos as $atendimento){ ?>
-        <a href="/atendimentos/chat/<?=$atendimento->ID?>" title="Atendimento: <?=$atendimento->TITULO?>" class="link-atendimento">
+        <a href="/atendimentos/chat/atendente/<?=$atendimento->ID?>" title="Atendimento: <?=$atendimento->TITULO?>" class="link-atendimento">
             <h2><?=$atendimento->TITULO?></h2>
             <p style="color: green;">Disponível</p>
             <p><b>Iniciado em</b>: <?=date('H:i:s d/m/Y',strtotime($atendimento->INICIADO_EM))?></p></a>

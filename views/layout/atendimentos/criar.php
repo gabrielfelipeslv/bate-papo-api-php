@@ -31,7 +31,7 @@
             .then(r => r.json())
             .then(function(retorno){
                 if(retorno.success){
-                    window.location.assign('/atendimentos/chat/' + retorno.idAtendimento);
+                    window.location.assign('/atendimentos/chat/atendente/' + retorno.idAtendimento);
                 }else{
                     alert(retorno.message ? retorno.message : 'Houve um problema ao criar o atendimento. Tente novamente!')
                 }

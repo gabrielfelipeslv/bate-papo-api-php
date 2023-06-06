@@ -18,14 +18,18 @@ class AtendimentosController extends Controller
         $this->renderizar('atendimentos/criar');
     }
 
-    public function chat($id = 0){
+    public function chat($remetente = '', $id = 0){
         $atendimento = new Atendimentos();
         $dadosAtendimento = $atendimento->getAtendimento($id);
         if(!$dadosAtendimento){
             erro('O link acessado não corresponde a nenhum atendimento existente.');
         }
+        if(!in_array($remetente, ['atendente', 'cliente'])){
+            erro('O link não informa se é a tela do atendente ou do cliente!');
+        }
         $this->renderizar('atendimentos/chat', configs: [
-            'atendimento' => $dadosAtendimento
+            'atendimento' => $dadosAtendimento,
+            'remetente'   => $remetente == 'atendente' ? 1 : 2
         ]);
     }
 

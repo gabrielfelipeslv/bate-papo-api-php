@@ -11,7 +11,7 @@
 
     function adicionaAtendimento(x){
         const link = document.createElement('a');
-        link.href      = "/atendimentos/chat/" + x.ID;
+        link.href      = "/atendimentos/chat/atendente" + x.ID;
         link.title     = "Atendimento: " + x.TITULO;
         link.className = 'link-atendimento';
 
