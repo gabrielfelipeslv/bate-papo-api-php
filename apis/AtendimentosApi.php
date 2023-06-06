@@ -51,7 +51,7 @@ class AtendimentosApi extends Api{
                 'mensagem' => [
                     'CONTEUDO'   => $json->mensagem,
                     'REMETENTE'  => $json->remetente,
-                    'ENVIADA_EM' => $timestamp_envio
+                    'ENVIADA_EM' => date('H:i:s d/m/Y', strtotime($timestamp_envio))
                 ]
             ];
         }else{
