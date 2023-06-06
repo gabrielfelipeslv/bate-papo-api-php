@@ -40,6 +40,8 @@
     let offset = 0;
     let recentes = true;
     let qtScrollPosLoading = 0;
+    let idUltimaMensagemRecebida = 0;
+    let sincronizacaoIniciada = false;
 
     // Para manter um ponto específico para a função de mensagens anteriores, determino um ponto de partida.
     //
@@ -52,9 +54,156 @@
     const containerMensagens   = $$('#mensagens')[0];
     const btnCarregarMensagens = $$('#carregar-mensagens')[0];
 
+    <?php if($atendimento->DISPONIVEL){ ?>
+    // Funções exclusivas para atendimentos disponíveis
+
+    document.querySelector('#mensagem-input').addEventListener('keyup', function(e) {
+        if(e.keyCode === 13){
+            e.preventDefault();
+            preEnviarMensagem();
+        }
+    });
+
+    document.querySelector('#enviar-mensagem').addEventListener('click', function() {
+        preEnviarMensagem();
+    });
+
+    function preEnviarMensagem(){
+        const campoMensagem = $$('#mensagem-input');
+        if (campoMensagem.val().length < 1) {
+            alert('Insira o texto de sua mensagem!');
+            campoMensagem.focus();
+            return;
+        }
+        enviarMensagem();
+    }
+
+    function sincronizarChat(){
+        console.log('')
+        console.log('--- Iniciando sincronização ---')
+        fetch("/requisicao/atendimentos/sincronizarChat",
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'token'        : token,
+                    'destinatario' : '<?=$remetente?>',
+                    'ultima'       : idUltimaMensagemRecebida
+                })
+            })
+            .then(r => r.json())
+            .then(function(retorno){
+                // console.log('--- Retorno recebido ---')
+                if(retorno.success){
+                    if(retorno.resultados.length > 0){
+                        retorno.resultados.forEach(x => adicionaMensagem(x));
+                        containerChat.scrollTo(0, containerChat.scrollHeight);
+                    }
+                }
+            })
+            .catch(function(){
+                // Apenas ignorar
+                // console.log('----- ERRO! -----')
+            })
+            .finally(function(){
+                // console.log('--- Sincronizado ---')
+                setTimeout(function(){
+                    // console.log('--- Reiniciando... ---')
+                    // console.log('')
+                    sincronizarChat();
+                }, 1000)
+            });
+    }
+
+    function enviarMensagem(){
+        $$('body').toggleClass('processando');
+
+        const campoMensagem = $$('#mensagem-input');
+
+        fetch("/requisicao/atendimentos/criarMensagem",
+            {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    'token'    : token,
+                    'remetente': '<?=$remetente?>',
+                    'mensagem' : campoMensagem.val()
+                })
+            })
+            .then(r => r.json())
+            .then(function(retorno){
+                if(retorno.success){
+                    campoMensagem[0].value = '';
+                    adicionaMensagem(retorno.mensagem);
+                    containerChat.scrollTo(0, containerChat.scrollHeight);
+                }else{
+                    alert(retorno.message ? retorno.message : 'Houve um problema ao enviar sua mensagem. Tente novamente!')
+                }
+            })
+            .catch(function(){
+                alert('Erro inesperado ao enviar sua mensagem. Tente novamente.')
+            })
+            .finally(function(){
+                $$('body').toggleClass('processando');
+            });
+    }
+
+    document.querySelector('#finalizar-atendimento').addEventListener('click', function() {
+        if(confirm('Realmente deseja finalizar esse atendimento?')){
+            $$('body').toggleClass('processando');
+
+            fetch("/requisicao/atendimentos/finalizarAtendimento",
+                {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        'token': token
+                    })
+                })
+                .then(r => r.json())
+                .then(function(retorno){
+                    if(retorno.success){
+                        alert('Atendimento finalizado!');
+                        window.location.reload();
+                    }else{
+                        alert(retorno.message ? retorno.message : 'Houve um problema ao finalizar o atendimento. Tente novamente!')
+                    }
+                })
+                .catch(function(){
+                    alert('Erro inesperado ao finalizar esse atendimento. Tente novamente.')
+                })
+                .finally(function(){
+                    $$('body').toggleClass('processando');
+                });
+        }
+    });
+    <?php } ?>
+
     function adicionaMensagem(x, novaMensagem = true){
         const mensagem = document.createElement('div');
-        mensagem.className = 'mensagem-chat ' + (x.REMETENTE == '<?=$remetente?>' ? "mensagem-propria" : "mensagem-recebida");
+
+        if(!novaMensagem && x.ID > idUltimaMensagemRecebida){
+            idUltimaMensagemRecebida = x.ID;
+        }
+
+        let classeMensagem = "mensagem-propria"
+        if(x.REMETENTE != '<?=$remetente?>'){
+            classeMensagem = "mensagem-recebida";
+            if(novaMensagem){
+                classeMensagem += " mensagem-recente"
+            }
+            if(x.ID > idUltimaMensagemRecebida){
+                idUltimaMensagemRecebida = x.ID;
+            }
+        }
+
+        mensagem.className = 'mensagem-chat ' + classeMensagem;
 
         const conteudo = document.createElement('p');
         conteudo.textContent = x.CONTEUDO;
@@ -118,6 +267,11 @@
             })
             .finally(function(){
                 $$('body').toggleClass('processando');
+                <?php if($atendimento->DISPONIVEL){ ?>
+                    if(!sincronizacaoIniciada) {
+                        sincronizarChat();
+                    }
+                <?php } ?>
             });
     }
 
@@ -128,120 +282,4 @@
     });
 
     carregarMensagens();
-
-    <?php if($atendimento->DISPONIVEL){ ?>
-        // Funções exclusivas para atendimentos disponíveis
-
-        document.querySelector('#enviar-mensagem').addEventListener('click', function() {
-            const campoMensagem = $$('#mensagem-input');
-            if (campoMensagem.val().length < 1) {
-                alert('Insira o texto de sua mensagem!');
-                campoMensagem.focus();
-                return;
-            }
-            enviarMensagem();
-        });
-
-        function sincronizarChat(){
-            console.log('')
-            console.log('--- Iniciando sincronização ---')
-            fetch("/requisicao/atendimentos/criarMensagem",
-                {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        'token'    : token,
-                        'remetente': '<?=$remetente?>',
-                        'mensagem' : campoMensagem.val()
-                    })
-                })
-                .then(r => r.json())
-                .then(function(retorno){
-                    console.log('--- Retorno recebido ---')
-                    if(retorno.success){
-                        campoMensagem[0].value = '';
-                        adicionaMensagem(retorno.mensagem);
-                        containerChat.scrollTo(0, containerChat.scrollHeight);
-                    }else{
-                        alert(retorno.message ? retorno.message : 'Houve um problema ao enviar sua mensagem. Tente novamente!')
-                    }
-                })
-                .catch(function(){
-                    alert('Erro inesperado ao enviar sua mensagem. Tente novamente.')
-                })
-                .finally(function(){
-                    console.log('--- Sincronizado ---')
-                    console.log('')
-                });
-        }
-
-        function enviarMensagem(){
-            $$('body').toggleClass('processando');
-
-            const campoMensagem = $$('#mensagem-input');
-
-            fetch("/requisicao/atendimentos/criarMensagem",
-                {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        'token'    : token,
-                        'remetente': '<?=$remetente?>',
-                        'mensagem' : campoMensagem.val()
-                    })
-                })
-                .then(r => r.json())
-                .then(function(retorno){
-                    if(retorno.success){
-                        campoMensagem[0].value = '';
-                        adicionaMensagem(retorno.mensagem);
-                        containerChat.scrollTo(0, containerChat.scrollHeight);
-                    }else{
-                        alert(retorno.message ? retorno.message : 'Houve um problema ao enviar sua mensagem. Tente novamente!')
-                    }
-                })
-                .catch(function(){
-                    alert('Erro inesperado ao enviar sua mensagem. Tente novamente.')
-                })
-                .finally(function(){
-                    $$('body').toggleClass('processando');
-                });
-        }
-
-        document.querySelector('#finalizar-atendimento').addEventListener('click', function() {
-            if(confirm('Realmente deseja finalizar esse atendimento?')){
-                $$('body').toggleClass('processando');
-
-                fetch("/requisicao/atendimentos/finalizarAtendimento",
-                    {
-                        method: "POST",
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            'token': token
-                        })
-                    })
-                    .then(r => r.json())
-                    .then(function(retorno){
-                        if(retorno.success){
-                            alert('Atendimento finalizado!');
-                            window.location.reload();
-                        }else{
-                            alert(retorno.message ? retorno.message : 'Houve um problema ao finalizar o atendimento. Tente novamente!')
-                        }
-                    })
-                    .catch(function(){
-                        alert('Erro inesperado ao finalizar esse atendimento. Tente novamente.')
-                    })
-                    .finally(function(){
-                        $$('body').toggleClass('processando');
-                    });
-            }
-        });
-    <?php } ?>
 </script>

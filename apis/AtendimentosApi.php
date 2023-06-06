@@ -187,6 +187,54 @@ class AtendimentosApi extends Api{
         $this->checkContinuarPaginacao();
     }
 
+    protected function sincronizarChat(){
+        $json = json_decode(file_get_contents('php://input'));
+        if(!isset($json->ultima, $json->destinatario, $json->token) ||
+            !is_numeric((int) $json->ultima) ||
+            !is_numeric((int) $json->destinatario)
+        ){
+            $this->exibirResultado([
+                'success' => false,
+                'message' => 'Dados ausentes para seguir com o carregamento das mensagens!'
+            ]);
+        }
+
+        $json->ultima       = (int) $json->ultima;
+        $json->destinatario = (int) $json->destinatario;
+
+        $atendimento = new Atendimentos();
+        $idReferer = explode('?', basename($_SERVER['HTTP_REFERER']))[0];
+        $atendimentoValido = $atendimento->getAtendimentoXToken($idReferer, $json->token);
+
+        if(!$atendimentoValido){
+            $this->exibirResultado([
+                'success' => false,
+                'message' => 'Credenciais inválidas para sincronização de mensagens!'
+            ]);
+        }
+
+        $sqlUltimaMensagemRecebida = "";
+        $parametros = [
+            ':ID_ATENDIMENTO' => $idReferer,
+            ':DESTINATARIO'   => $json->destinatario
+        ];
+
+        if($json->ultima > 0){
+            $sqlUltimaMensagemRecebida = "AND id > :ID_ULTIMA_MENSAGEM";
+            $parametros[':ID_ULTIMA_MENSAGEM'] = $json->ultima;
+        }
+
+        $this->resultadosExtras['success'] = true;
+        $this->resultados = $this->itens(
+            "SELECT id, conteudo, remetente, enviada_em
+                    FROM mensagens 
+                    WHERE id_atendimento = :ID_ATENDIMENTO AND remetente != :DESTINATARIO {$sqlUltimaMensagemRecebida} 
+                    ORDER BY id ASC", $parametros
+        );
+
+        $this->checkContinuarPaginacao();
+    }
+
     public function formatarDatas(){
         foreach($this->resultados as $resultado){
             if(isset($resultado->INICIADO_EM) && $resultado->INICIADO_EM != null){

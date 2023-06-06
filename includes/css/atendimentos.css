@@ -124,6 +124,25 @@ h2.horarios-atendimento{
 .mensagem-chat.mensagem-recebida{
     background: #CCCCCC;
 }
+.mensagem-chat.mensagem-recebida.mensagem-recente{
+    animation: destacar-mensagem 1s ease-in-out forwards;
+}
+
+@keyframes destacar-mensagem {
+    0%{
+        background: #CCCCCC;
+    }
+    20%{
+        background: #AFC;
+    }
+    80%{
+        background: #AFC;
+    }
+    100%{
+        background: #CCCCCC;
+    }
+}
+
 .mensagem-chat.mensagem-propria{
     margin-left: auto;
     background: #CCCCFF;
