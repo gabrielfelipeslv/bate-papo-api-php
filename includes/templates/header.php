@@ -28,11 +28,14 @@
     </div>
 
     <nav id="responsiva">
+        <a href="<?=SITE?>/atendimentos/criar" title="Página Inicial">
+            Página Inicial
+        </a>
         <a href="<?=SITE?>/atendimentos/criar" title="Iniciar atendimento">
             Iniciar atendimento
         </a>
         <a href="<?=SITE?>/atendimentos" title="Histórico de atendimentos">
-            Histórico
+            Histórico de atendimentos
         </a>
     </nav>
 

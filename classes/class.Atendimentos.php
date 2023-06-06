@@ -11,6 +11,18 @@ class Atendimentos extends Sql
         ]);
     }
 
+    function finalizarAtendimento($id_atendimento = 0, $token = 0)
+    {
+        return $this->updateReturnQt('UPDATE atendimentos
+                                    SET
+                                    disponivel = 0, finalizado_em = :HORARIO_FINALIZACAO
+                                    WHERE id = :ID_ATENDIMENTO AND token_requests = :TOKEN_RECEBIDO', [
+            ':HORARIO_FINALIZACAO' => date('Y-m-d H:i:s'),
+            ':ID_ATENDIMENTO'      => $id_atendimento,
+            ':TOKEN_RECEBIDO'      => $token
+        ]);
+    }
+
     function getAtendimento($id_atendimento = 0)
     {
         return $this->item('SELECT * FROM atendimentos

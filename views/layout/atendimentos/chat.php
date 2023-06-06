@@ -1,16 +1,22 @@
 <h1>Atendimento: <?=$atendimento->TITULO?> (#<?=$atendimento->ID?>)</h1>
 
+<h2 class="horarios-atendimento"><span style="color: darkgreen">Iniciado em:</span> <?=date('H:i:s d/m/Y',strtotime($atendimento->INICIADO_EM))?></h2>
+
+<?php if($atendimento->DISPONIVEL){ ?>
+    <button id="finalizar-atendimento" class="btn-default">
+        Finalizar atendimento
+    </button>
+<?php }else{ ?>
+    <h2 class="horarios-atendimento"><span style="color: darkred">Finalizado em:</span> <?=date('H:i:s d/m/Y',strtotime($atendimento->FINALIZADO_EM))?></h2>
+<?php } ?>
+
 <div id="container-chat">
     <p id="atendimento-iniciado" style="display: none">Atendimento iniciado</p>
     <button id="carregar-mensagens" class="btn-default">Carregar mensagens anteriores</button>
     <div id="mensagens"></div>
 </div>
 
-<?php if(!$atendimento->DISPONIVEL){ ?>
-    <div id="atendimento-finalizado">
-        Esse atendimento foi finalizado e não pode receber mais interações.
-    </div>
-<?php }else{ ?>
+<?php if($atendimento->DISPONIVEL){ ?>
     <div id="simulador-chat">
         <div id="atendente" style="margin-bottom: 15px">
             <input type="text" maxlength="255" id="mensagem-atendente" placeholder="Simular mensagem do atendente" class="input-simples">
@@ -85,12 +91,8 @@
                     recentes = retorno.continuar;
                     if(!retorno.continuar){
                         $$("#carregar-mensagens").css('display', 'none');
-                        if(offset < 1 && retorno.resultados.length < 1){
-                            containerChat.innerHTML = '';
-                        }else{
-                            $$("#atendimento-iniciado").css('display', 'block');
-                            qtScrollPosLoading += $$("#atendimento-iniciado")[0].offsetHeight;
-                        }
+                        $$("#atendimento-iniciado").css('display', 'block');
+                        qtScrollPosLoading += $$("#atendimento-iniciado")[0].offsetHeight;
                     }else{
                         qtScrollPosLoading += $$("#carregar-mensagens")[0].offsetHeight;
                         if(retorno.start){
@@ -126,7 +128,7 @@
     carregarMensagens();
 
     <?php if($atendimento->DISPONIVEL){ ?>
-        // Funções de envio de mensagens apenas se o chat estiver ativo
+        // Funções exclusivas para atendimentos disponíveis
 
         document.querySelector('#enviar-mensagem-atendente').addEventListener('click', function() {
             const campoMensagem = $$('#mensagem-atendente');
@@ -183,5 +185,36 @@
                 });
         }
 
+        document.querySelector('#finalizar-atendimento').addEventListener('click', function() {
+            if(confirm('Realmente deseja finalizar esse atendimento?')){
+                $$('body').toggleClass('processando');
+
+                fetch("/requisicao/atendimentos/finalizarAtendimento",
+                    {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            'token': token
+                        })
+                    })
+                    .then(r => r.json())
+                    .then(function(retorno){
+                        if(retorno.success){
+                            alert('Atendimento finalizado!');
+                            window.location.reload();
+                        }else{
+                            alert(retorno.message ? retorno.message : 'Houve um problema ao finalizar o atendimento. Tente novamente!')
+                        }
+                    })
+                    .catch(function(){
+                        alert('Erro inesperado ao finalizar esse atendimento. Tente novamente.')
+                    })
+                    .finally(function(){
+                        $$('body').toggleClass('processando');
+                    });
+            }
+        });
     <?php } ?>
 </script>

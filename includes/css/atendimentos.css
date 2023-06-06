@@ -50,10 +50,23 @@
     text-align: end;
 }
 
+h2.horarios-atendimento{
+    margin: 0;
+    padding: 0 20px;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+.horarios-atendimento span{
+    font-weight: 800;
+}
+
 #container-chat{
     border: 1px solid #DDD;
     border-radius: 3px;
     margin-bottom: 20px;
+    margin-top: 20px;
     flex: 1;
     padding: 0 10px;
     overflow: auto;
@@ -61,21 +74,30 @@
     flex-direction: column;
 }
 
+#finalizar-atendimento{
+    border: 1px solid #C44;
+    color: #C44;
+    margin-top: 15px;
+    box-shadow: none;
+}
+#finalizar-atendimento:hover{
+    background: #FDD;
+}
+
 #atendimento-iniciado{
     font-size: .8rem;
     color: #777;
     text-align: center;
-    margin-bottom: 0;
 }
 
-#container-chat:empty:after{
+#mensagens:empty:after{
     content: 'Não há mensagens para serem exibidas aqui.';
     padding: 20px;
     background: #DDD;
     border-radius: 3px;
     font-size: .8rem;
     display: block;
-    margin: auto;
+    margin: 0 auto 20px;
     width: 80%;
     text-align: center;
 }

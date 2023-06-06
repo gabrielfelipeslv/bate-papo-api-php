@@ -83,6 +83,38 @@ class AtendimentosApi extends Api{
         }
     }
 
+    protected function finalizarAtendimento(){
+        $json = json_decode(file_get_contents('php://input'));
+        if(!isset($json->token)){
+            $this->exibirResultado([
+                'success' => false,
+                'message' => 'Dados ausentes para continuar.'
+            ]);
+        }
+
+        $atendimento = new Atendimentos();
+        $idReferer = explode('?', basename($_SERVER['HTTP_REFERER']))[0];
+        $atendimentoValido = $atendimento->getAtendimentoXToken($idReferer, $json->token);
+
+        if(!$atendimentoValido){
+            $this->exibirResultado([
+                'success' => false,
+                'message' => 'Credenciais inválidas para encerrar o atendimento!'
+            ]);
+        }
+
+        if($atendimento->finalizarAtendimento($idReferer, $json->token)){
+            $this->resultados = [
+                'success' => true
+            ];
+        }else{
+            $this->resultados = [
+                'success' => false,
+                'message' => 'Não conseguimos atualizar o status do atendimento... Tente novamente!'
+            ];
+        }
+    }
+
     protected function listarHistorico(){
         $json = json_decode(file_get_contents('php://input'));
         if(!isset($json->offset) || !is_numeric((int) $json->offset)){
