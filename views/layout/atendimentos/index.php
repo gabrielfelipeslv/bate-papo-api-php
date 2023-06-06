@@ -23,13 +23,13 @@
         disponivel.style.color = x.DISPONIVEL ? 'green' : 'red';
 
         const inicio = document.createElement('p');
-        inicio.textContent = x.INICIADO_EM;
+        inicio.textContent = "Iniciado em: " + x.INICIADO_EM;
 
         link.append(titulo, disponivel, inicio);
 
         if(!x.DISPONIVEL){
             const finalizacao = document.createElement('p');
-            finalizacao.textContent = x.FINALIZADO_EM;
+            finalizacao.textContent = "Finalizado em: " + x.FINALIZADO_EM;
             link.append(finalizacao);
         }
 

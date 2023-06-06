@@ -4,6 +4,7 @@ class AtendimentosApi extends Api{
     public function __construct(){
         parent::__construct();
         $this->parametrosObrigatorios = [];
+        $this->funcaoFinal = 'formatarDatas';
     }
 
     protected function criarMensagem(){
@@ -184,6 +185,20 @@ class AtendimentosApi extends Api{
         }
 
         $this->checkContinuarPaginacao();
+    }
+
+    public function formatarDatas(){
+        foreach($this->resultados as $resultado){
+            if(isset($resultado->INICIADO_EM) && $resultado->INICIADO_EM != null){
+                $resultado->INICIADO_EM = date('H:i:s d/m/Y', strtotime($resultado->INICIADO_EM));
+            }
+            if(isset($resultado->FINALIZADO_EM) && $resultado->FINALIZADO_EM != null){
+                $resultado->FINALIZADO_EM = date('H:i:s d/m/Y', strtotime($resultado->FINALIZADO_EM));
+            }
+            if(isset($resultado->ENVIADA_EM) && $resultado->ENVIADA_EM != null){
+                $resultado->ENVIADA_EM = date('H:i:s d/m/Y', strtotime($resultado->ENVIADA_EM));
+            }
+        }
     }
 
     private function checkContinuarPaginacao(){
