@@ -77,6 +77,15 @@
 .toggle-menu:hover svg{
     fill: #d1d9ff;
 }
+.corpo-custom-chat{
+    position: fixed;
+    top: 100px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+}
 
 @media (min-width: 781px) {
     .toggle-menu{
@@ -84,6 +93,9 @@
     }
     main{
         margin-left: 25%;
+    }
+    .corpo-custom-chat{
+        left: 25%;
     }
     #corpo{
         flex: 1;

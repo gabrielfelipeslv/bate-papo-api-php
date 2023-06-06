@@ -5,7 +5,7 @@ class AtendimentosController extends Controller
 
     public function __construct(){
         parent::__construct(
-            css: ['atendimentos']
+//            css: ['atendimentos']
         );
     }
 

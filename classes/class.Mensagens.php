@@ -26,7 +26,7 @@ class Mensagens extends Sql
         ]);
     }
 
-    function criarMensagem($id_atendimento, $remetente, $conteudo)
+    function criarMensagem($id_atendimento, $remetente, $conteudo, $timestamp)
     {
         // Remetente:
         //  1 -> Atendente
@@ -41,9 +41,9 @@ class Mensagens extends Sql
                 VALUES
                 (NULL, :ID_ATENDIMENTO, :REMETENTE, :CONTEUDO, :ENVIADA_EM)', [
             ':ID_ATENDIMENTO' => $id_atendimento,
-            ':REMETENTE'       => $remetente,
+            ':REMETENTE'      => $remetente,
             ':CONTEUDO'       => $conteudo,
-            ':INICIADO_EM'   => date('Y-m-d H:i:s'),
+            ':ENVIADA_EM'     => $timestamp,
         ]);
     }
 

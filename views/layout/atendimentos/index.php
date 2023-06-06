@@ -56,15 +56,14 @@
                     offset = retorno.checkpoint;
                     recentes = retorno.continuar;
                     if(!retorno.continuar){
-                        $$("#carregar-atendimentos").fadeOut();
-                        alert('Todos os atendimentos foram carregados!');
+                        $$("#carregar-atendimentos").css('display', 'none');
                     }
                 }else{
                     alert(retorno.message ? retorno.message : 'Houve um problema ao buscar processar o histórico de atendimentos. Tente novamente.');
                 }
             })
             .catch(function(e){
-                $$("#carregar-atendimentos").fadeOut();
+                $$("#carregar-atendimentos").css('display', 'none');
                 recentes = false;
                 alert('Erro inesperado ao buscar histórico de atendimentos.')
             })

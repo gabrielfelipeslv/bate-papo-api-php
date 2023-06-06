@@ -49,3 +49,100 @@
     margin: 5px 0;
     text-align: end;
 }
+
+#container-chat{
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    flex: 1;
+    padding: 0 10px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#atendimento-iniciado{
+    font-size: .8rem;
+    color: #777;
+    text-align: center;
+    margin-bottom: 0;
+}
+
+#container-chat:empty:after{
+    content: 'Não há mensagens para serem exibidas aqui.';
+    padding: 20px;
+    background: #DDD;
+    border-radius: 3px;
+    font-size: .8rem;
+    display: block;
+    margin: auto;
+    width: 80%;
+    text-align: center;
+}
+
+#carregar-mensagens{
+    margin: 20px auto 30px;
+}
+
+#mensagens{
+    margin-top: auto;
+}
+
+.mensagem-chat{
+    display: block;
+    width: 80%;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: .9rem;
+    font-weight: 500;
+    margin: 5px 0;
+    color: #333;
+}
+
+.mensagem-chat.atendente{
+    background: #CCCCCC;
+}
+.mensagem-chat.cliente{
+    margin-left: auto;
+    background: #CCCCFF;
+}
+
+.mensagem-chat p:first-child{
+    margin: 0;
+    text-align: justify;
+}
+.mensagem-chat p:last-child{
+    font-size: .7rem;
+    text-align: end;
+    margin: 15px 0 0;
+}
+
+#simulador-chat{
+    width: 100%;
+    padding: 20px;
+    background: #CCC;
+}
+
+#simulador-chat div{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#simulador-chat input{
+    flex: 1;
+}
+
+#simulador-chat button{
+    width: fit-content;
+    font-size: 1rem;
+    background: var(--tema-hypeone-suave);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#simulador-chat button:hover{
+    background: var(--tema-hypeone);
+}

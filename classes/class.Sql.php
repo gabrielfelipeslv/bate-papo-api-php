@@ -47,7 +47,7 @@ class Sql
 
     protected function itens($comando = '', $parametros = [], $qtMaxResultados = false, $offset = false){
         $addLimit = $qtMaxResultados && is_int($qtMaxResultados);
-        $addOffset = $qtMaxResultados && is_int($qtMaxResultados);
+        $addOffset = $offset && is_int($offset);
         if($addLimit){
             $comando .= " LIMIT :LIMIT_PARAM";
         }
@@ -61,7 +61,7 @@ class Sql
         if($addOffset){
             $sql->bindValue(':OFFSET_PARAM', (int) $offset, PDO::PARAM_INT);
         }
-        foreach($parametros as $param => $index){
+        foreach($parametros as $index => $param){
             $sql->bindValue($index, $param);
         }
         if($sql->execute()){
