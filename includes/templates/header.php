@@ -31,7 +31,7 @@
         <a href="<?=SITE?>/atendimentos/criar" title="Iniciar atendimento">
             Iniciar atendimento
         </a>
-        <a href="<?=SITE?>/atendimentos/historico" title="Histórico de atendimentos">
+        <a href="<?=SITE?>/atendimentos" title="Histórico de atendimentos">
             Histórico
         </a>
     </nav>

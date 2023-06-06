@@ -10,7 +10,7 @@ class AtendimentosController extends Controller
     }
 
     public function index(){
-        $this->renderizar('atendimentos/historico', configs: [
+        $this->renderizar('atendimentos/index', configs: [
         ]);
     }
 

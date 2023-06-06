@@ -45,9 +45,26 @@ class Sql
         }
     }
 
-    protected function itens($comando = '', $parametros = []){
+    protected function itens($comando = '', $parametros = [], $qtMaxResultados = false, $offset = false){
+        $addLimit = $qtMaxResultados && is_int($qtMaxResultados);
+        $addOffset = $qtMaxResultados && is_int($qtMaxResultados);
+        if($addLimit){
+            $comando .= " LIMIT :LIMIT_PARAM";
+        }
+        if($addOffset){
+            $comando .= " OFFSET :OFFSET_PARAM";
+        }
         $sql = $this->pdo->prepare($comando);
-        if($sql->execute($parametros)){
+        if($addLimit){
+            $sql->bindValue(':LIMIT_PARAM', (int) $qtMaxResultados, PDO::PARAM_INT);
+        }
+        if($addOffset){
+            $sql->bindValue(':OFFSET_PARAM', (int) $offset, PDO::PARAM_INT);
+        }
+        foreach($parametros as $param => $index){
+            $sql->bindValue($index, $param);
+        }
+        if($sql->execute()){
             return $sql->fetchAll(PDO::FETCH_OBJ);
         }else{
             return [];

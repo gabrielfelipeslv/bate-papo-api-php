@@ -49,6 +49,25 @@
             }
         ?>
     </style>
+    <script>
+        <?php
+
+        echo file_get_contents(__DIR__ . '/../../includes/js/base.js');
+
+        if(isset($jsPagina)){
+            if(is_array($jsPagina)){
+                foreach($jsPagina as $js){
+                    if(file_exists(__DIR__ . '/../../includes/js/' . $js . '.js')){
+                        echo file_get_contents(__DIR__ . '/../../includes/js/' . $js . '.js');
+                    }
+                }
+            }else if(file_exists(__DIR__ . '/../../includes/js/' . $jsPagina . '.js')){
+                echo file_get_contents(__DIR__ . '/../../includes/js/' . $jsPagina . '.js');
+            }
+        }
+
+        ?>
+    </script>
 
 </head>
 <body class="teuquiz-principal">
@@ -73,26 +92,6 @@
     <?php
         include('templates/footer.php');
     ?>
-
-    <script>
-        <?php
-
-        echo file_get_contents(__DIR__ . '/../../includes/js/base.js');
-
-        if(isset($jsPagina)){
-            if(is_array($jsPagina)){
-                foreach($jsPagina as $js){
-                    if(file_exists(__DIR__ . '/../../includes/js/' . $js . '.js')){
-                        echo file_get_contents(__DIR__ . '/../../includes/js/' . $js . '.js');
-                    }
-                }
-            }else if(file_exists(__DIR__ . '/../../includes/js/' . $jsPagina . '.js')){
-                echo file_get_contents(__DIR__ . '/../../includes/js/' . $jsPagina . '.js');
-            }
-        }
-
-        ?>
-    </script>
 
 </body>
 </html>

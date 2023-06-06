@@ -7,3 +7,36 @@
     border: none;
     box-shadow: 1px 1px 1px 2px rgb(55 55 55 / 20%);
 }
+
+#container-atendimentos{
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+.link-atendimento{
+    display: block;
+    max-width: 400px;
+    width: 100%;
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    padding: 10px;
+    text-decoration: none;
+    color: #353535;
+}
+
+.link-atendimento:hover{
+    background: #EEF;
+}
+
+.link-atendimento h2 {
+    color: var(--tema-hypeone-suave);
+    margin: 0 0 10px;
+}
+
+.link-atendimento p{
+    margin: 5px 0;
+    text-align: end;
+}

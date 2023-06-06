@@ -29,17 +29,33 @@ class AtendimentosApi extends Api{
         }
     }
 
-    protected function enquetes(){
+    protected function listarHistorico(){
+        $json = json_decode(file_get_contents('php://input'));
+        if(!isset($json->offset) || !is_numeric((int) $json->offset)){
+            $this->exibirResultado([
+                'success' => false,
+                'message' => 'Dados ausentes para seguir com a listagem de atendimentos!',
+                'offset'  => $_GET
+            ]);
+        }
+        $this->offset = (int) $json->offset;
+        $this->resultadosExtras['success'] = true;
         $this->resultados = $this->itens(
-            "SELECT id,              titulo, criacao, link, capa as youtuber,                                               'enquetes' as tipo, 'Enquete' as TEXTO_TIPO, tags FROM " . CRIADOS['enquetes'] . " WHERE publica = 1
-                ORDER BY criacao DESC LIMIT 5 OFFSET " . $this->offset
+            "SELECT id, titulo, disponivel, iniciado_em,  finalizado_em
+                    FROM atendimentos
+                    ORDER BY id DESC", qtMaxResultados: 6, offset: $this->offset
         );
+
+        $this->checkContinuarPaginacao();
     }
 
-    protected function listas(){
-        $this->resultados = $this->itens(
-            "SELECT id, titulo, criacao, link,  '' as youtuber,                                                'listas' as tipo,   'Lista' as TEXTO_TIPO, tags FROM " . CRIADOS['listas'] . "     WHERE publica = 1
-                    ORDER BY criacao DESC LIMIT 5 OFFSET " . $this->offset
-        );
+    private function checkContinuarPaginacao(){
+        $this->resultadosExtras['continuar'] = false;
+        if(!empty($this->resultados) && count($this->resultados) > 5){
+            $this->resultadosExtras['continuar'] = true;
+            $this->resultadosExtras['checkpoint'] = $this->offset + 5;
+            // Dispensamos o último resultado pois ele serve apenas para verificar se precisamos fazer uma outra consulta
+            array_pop($this->resultados);
+        }
     }
 }
