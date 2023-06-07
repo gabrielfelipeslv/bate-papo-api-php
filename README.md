@@ -15,7 +15,7 @@ Projeto que consiste num sistema de atendimento via chat em tempo real, utilizan
 - Finalização de chats, bloqueando o recebimento de mensagens;
 - Alternância de visão do chat do atendente e do cliente;
 
-✔️ Pré-requisitos (baseados no ambiente que desenvolvi):
+✔️ Pré-requisitos de ambiente (baseados no que desenvolvi):
 
 - PHP   >= 8.1.0
 - MySql >= 5.7.36
