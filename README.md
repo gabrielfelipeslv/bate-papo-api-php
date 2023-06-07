@@ -36,7 +36,7 @@ Projeto que consiste num sistema de atendimento via chat em tempo real, utilizan
 Assim que iniciar o projeto utilize o menu lateral para ter acesso às 3 telas principais do projeto:
 
 - Página Inicial: te apresenta os mais recentes atendimentos/chats em aberto, limitando a 5 itens. Visa facilitar o acesso às atividades recentes;
-- Iniciar Atendimento: aqui você poderá criar uma nova sala de chat após inserir um título pra ela. Assim que ela for gerada, você será redirecionado automaticamente e terá acesso ao chat. *Abaixo você terá mais informações sobre como utilizar todos os seus recursos);
+- Iniciar Atendimento: aqui você poderá criar uma nova sala de chat após inserir um título pra ela. Assim que ela for gerada, você será redirecionado automaticamente e terá acesso ao chat. **Abaixo você terá mais informações sobre como utilizar todos os seus recursos**;
 - Histórico de atendimentos: você pode consultar todos os atendimentos já gerados, sejam eles disponíveis ou finalizados, assim como suas mensagens. A página de itens é automática (5 em 5 itens);
 
 ---
