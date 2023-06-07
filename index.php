@@ -6,15 +6,7 @@ session_start();
 set_include_path(__DIR__ . '/includes/');
 
 $initConfigs = [
-    'pegarFotosTeuQuiz'      => $_SERVER['HTTP_HOST'] == 'tqt.teuquiz.com',
-    'noAnalytics'            => $_SERVER['HTTP_HOST'] == 'tqt.teuquiz.com',
-    'adblock'                => true,
-    'existeNotificacao'      => false,
-    'semJquery'              => true,
-    'hide'                   => false,
-    'semBase'                => false,
-    'semFooter'              => false,
-    'mostrarPopUpAliExpress' => false
+    'semBase' => false
 ];
 
 $url = $_GET['parametroURLsite'] ?? '';

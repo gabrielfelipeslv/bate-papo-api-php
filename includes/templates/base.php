@@ -27,9 +27,6 @@
     <meta name="msapplication-TileColor" content="#BB2222">
     <meta name="theme-color" content="#BB2222">
 
-    <link rel="preload" href="https://teuquiz.com/arquivos/css/fontawesome-free-5.9.0-web//webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="https://teuquiz.com/arquivos/css/fontawesome-free-5.9.0-web/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
-
     <style>
         <?php
 
@@ -70,7 +67,7 @@
     </script>
 
 </head>
-<body class="teuquiz-principal">
+<body>
 
     <?php
         include('templates/header.php');

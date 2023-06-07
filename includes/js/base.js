@@ -70,14 +70,6 @@ class TargetNodes extends Array{
     focus(){
         this[0].focus()
     }
-    scrollTo(){
-        const posicao = this[0].getBoundingClientRect().top;
-        if(posicao <= 0){
-            window.scrollTo(0, -1*document.querySelector('html').getBoundingClientRect().top - (-1*posicao) - $$('#menu-principal-teuquiz')[0].getBoundingClientRect().height - 10);
-        } else {
-            window.scrollTo(0, -1*document.querySelector('html').getBoundingClientRect().top + posicao - $$('#menu-principal-teuquiz')[0].getBoundingClientRect().height - 10);
-        }
-    }
     random(){
         return this[Math.floor(Math.random() * this.length)];
     }
