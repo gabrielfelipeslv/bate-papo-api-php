@@ -3,10 +3,10 @@
     font-family: Calibri, sans-serif !important;
 }
 :root {
-    --tema-hypeone: #5400CE;
-    --tema-hypeone-claro: #91CDFA;
-    --tema-hypeone-suave: #518DCA;
-    --tema-hypeone-forte: #24007E;
+    --tema-site: #5400CE;
+    --tema-site-claro: #91CDFA;
+    --tema-site-suave: #518DCA;
+    --tema-site-forte: #24007E;
 }
 
 body{
@@ -31,7 +31,7 @@ body{
     border: none;
 }
 .btn-default:hover{
-    background: var(--tema-hypeone-forte);
+    background: var(--tema-site-forte);
     color: white;
 }
 
@@ -71,7 +71,7 @@ body:before{
 body:after{
     content: '';
     border-radius: 100%;
-    border: 10px solid var(--tema-hypeone);
+    border: 10px solid var(--tema-site);
     border-right-color: #FAFAFA;
     width: 70px;
     height: 70px;

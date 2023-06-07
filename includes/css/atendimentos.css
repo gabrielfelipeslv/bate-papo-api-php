@@ -41,7 +41,7 @@
 }
 
 .link-atendimento h2 {
-    color: var(--tema-hypeone-suave);
+    color: var(--tema-site-suave);
     margin: 0 0 10px;
 }
 
@@ -176,7 +176,7 @@ h2.horarios-atendimento{
 #simulador-chat button{
     width: fit-content;
     font-size: 1rem;
-    background: var(--tema-hypeone-suave);
+    background: var(--tema-site-suave);
     color: white;
     border: none;
     padding: 10px 20px;
@@ -184,14 +184,14 @@ h2.horarios-atendimento{
 }
 
 #simulador-chat button:hover{
-    background: var(--tema-hypeone);
+    background: var(--tema-site);
 }
 
 #alternar-visao-chat{
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--tema-hypeone-suave);
+    color: var(--tema-site-suave);
     font-weight: 600;
     cursor: pointer;
     margin: 0 0 20px;
@@ -199,5 +199,5 @@ h2.horarios-atendimento{
 #alternar-visao-chat svg{
     width: 20px;
     margin-left: 10px;
-    fill: var(--tema-hypeone-suave);
+    fill: var(--tema-site-suave);
 }

@@ -2,7 +2,7 @@
 
 <div>
     <input id="titulo-atendimento" placeholder="Insira o título do seu atendimento" class="input-simples" style="margin: 20px 0">
-    <button id="iniciar-atendimento" class="btn-default" style="background: var(--tema-hypeone-suave); color: white">
+    <button id="iniciar-atendimento" class="btn-default" style="background: var(--tema-site-suave); color: white">
         Iniciar atendimento
     </button>
 </div>

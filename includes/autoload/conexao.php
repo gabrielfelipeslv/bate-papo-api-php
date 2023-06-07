@@ -1,6 +1,6 @@
 <?php
 
-$banco = 'batepapo_hypeone';
+$banco = 'batepapo_api_php';
 $usuario = 'root';
 $pass = '';
 
