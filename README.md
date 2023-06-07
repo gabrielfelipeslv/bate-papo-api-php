@@ -7,10 +7,15 @@ Projeto que consiste num sistema de atendimento via chat em tempo real, utilizan
 - HTML;
 - MySql;
 
-Funcionalidades:
+🏭 Funcionalidades:
 
 - Criação de chat de atendimento, atualizado em tempo real;
 - Registro de histórico de atendimentos;
 - Paginação de mensagens e atendimentos automática;
 - Finalização de chats, bloqueando o recebimento de mensagens;
 - Alternância de visão do chat do atendente e do cliente;
+
+✔️ Pré-requisitos (baseados no ambiente que desenvolvi):
+
+- PHP   >= 8.1.0
+- MySql >= 5.7.36
